@@ -16,11 +16,11 @@ services.AddScoped<IPatronRepository, JsonPatronRepository>();
 services.AddScoped<ILoanRepository, JsonLoanRepository>();
 services.AddScoped<ILoanService, LoanService>();
 services.AddScoped<IPatronService, PatronService>();
+services.AddScoped<ConsoleApp>();
 
-services.AddSingleton<JsonData>();
-services.AddSingleton<ConsoleApp>();
+services.AddSingleton<JsonData>(provider => new JsonData("data.json")); // Adjust "data.json" as needed
 
-var servicesProvider = services.BuildServiceProvider();
+var serviceProvider = services.BuildServiceProvider();
 
-var consoleApp = servicesProvider.GetRequiredService<ConsoleApp>();
-consoleApp.Run().Wait();
+var consoleApp = serviceProvider.GetRequiredService<ConsoleApp>();
+await consoleApp.Run();
